@@ -38,6 +38,7 @@ class CNNEncoder2(Model):
         self.conv = layers.Conv1D(kernel_size=kernel_size, filters=filters, padding=padding,
                                   name=name + '/Conv1D')
         self.pool = layers.MaxPool1D(pool_size=pool_size, name=name + '/MaxPool1D')
+        self.global_pool = layers.GlobalAveragePooling1D(name=name + '/GlobalAvePool1D')
 
     @property
     def variables(self):
@@ -57,4 +58,4 @@ class CNNEncoder2(Model):
             if is_training:
                 y = self.dropout(y)
 
-        return y
+        return self.global_pool(y)
